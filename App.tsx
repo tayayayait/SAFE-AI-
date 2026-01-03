@@ -10,7 +10,9 @@ import { Cases } from './pages/Cases';
 import { Settings } from './pages/Settings';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  const isAuthDisabled = import.meta.env.VITE_DISABLE_AUTH === 'true';
+  const isAuthenticated =
+    isAuthDisabled || localStorage.getItem('isAuthenticated') === 'true';
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -19,11 +21,16 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 };
 
 const App: React.FC = () => {
+  const isAuthDisabled = import.meta.env.VITE_DISABLE_AUTH === 'true';
+
   return (
     <ToastProvider>
       <HashRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={isAuthDisabled ? <Navigate to="/dashboard" replace /> : <Login />}
+          />
           
           <Route path="/" element={
             <ProtectedRoute>
