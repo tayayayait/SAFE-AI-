@@ -1,0 +1,7 @@
+{
+  "name": "KOSHA Disaster Siren AI Alert",
+  "description": "An AI-based disaster siren alert admin dashboard for monitoring and managing safety alerts, recipients, and system logs.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
